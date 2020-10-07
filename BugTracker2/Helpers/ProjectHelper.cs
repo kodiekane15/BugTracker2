@@ -60,7 +60,7 @@ namespace BugTracker2.Helpers
             return resultList;
         }
 
-        public List<ApplicationUser> ListUsersOnPrjectInRole(int projectId, string roleName)
+        public List<ApplicationUser> ListUsersOnProjectInRole(int projectId, string roleName)
         {
             var userList = ListUserOnProject(projectId);
             var resultList = new List<ApplicationUser>();
