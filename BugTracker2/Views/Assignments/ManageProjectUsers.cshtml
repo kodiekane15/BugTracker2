@@ -1,0 +1,75 @@
+﻿@using BugTracker2.Models
+@using BugTracker2.Helpers
+@model IEnumerable<ApplicationUser>
+	
+@{
+	var projectHelper = new ProjectHelper();
+	var userRoleHelper = new UserRoleHelper();
+
+	}
+<style>
+	.btnWide {
+		width: 100%;
+	}
+</style>
+
+<div class="container">
+	<br />
+	<h3>Manage the Users on Projects</h3>
+	<hr />
+	@using (Html.BeginForm())
+	{ 
+		@Html.AntiForgeryToken()
+		<div class="row">
+			<div class="col-lg-6">
+				<h4>Select Users</h4>
+				@Html.ListBox("UserIds")
+			</div>
+			<div class="col-lg-6">
+
+				<h4>Select Projects</h4>
+				@Html.ListBox("ProjectIds")
+			</div>
+		</div>
+		<br />
+		<div class="row">
+			<div class="col-md-6">
+				<button type="submit" value="true" class="btn btn-success btnWide" name="assignRemove">Assign Users to Project(s)</button>
+			</div>
+			<div class="col-md-6">
+			<button type="submit" value="false" class="btn btn-danger btnWide" name="assignRemove">Remove Users From Project(s)</button>
+			</div>
+		</div>
+	}
+	<hr />
+	<table class="table">
+		<tr>
+			<th>
+				User
+			</th>
+			<th>
+				Roles
+			</th>
+			<th>
+				Projects
+			</th>
+		</tr>
+		@foreach (var user in Model)
+		{ 
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => user.FullName)
+				</td>
+				<td>
+					@userRoleHelper.ListUserRoles(user.Id).FirstOrDefault()
+				</td>
+				<td>
+					@foreach (var project in projectHelper.ListUserProjects(user.Id))
+					{ 
+						@project.ProjectName <br />
+					}
+				</td>
+			</tr>
+		}
+	</table>
+</div>

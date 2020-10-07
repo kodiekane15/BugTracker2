@@ -1,0 +1,26 @@
+﻿@model BugTracker2.Models.ApplicationUser
+<style>
+	.btnWide {
+		width: 100%;
+	}
+
+</style>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-1 text-center h2"> Managing Role for @Model.FullName</div>
+	</div>
+	<br />
+	@using (Html.BeginForm())
+	{
+		@Html.AntiForgeryToken()
+		<div class="row">
+			<div class="col-7">
+				@Html.DropDownList("RoleName", "-- No Role --")
+			</div>
+			<br />
+			<div class="col">
+				<button type="submit" class="btn btn-success btnWide">Manage Role</button>
+			</div>
+		</div>
+	}
+</div>

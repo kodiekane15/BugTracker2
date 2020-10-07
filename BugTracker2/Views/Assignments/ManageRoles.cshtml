@@ -1,0 +1,57 @@
+﻿@using BugTracker2.Models
+@using BugTracker2.Helpers
+@model IEnumerable<ApplicationUser>
+
+@{
+	var roleHelper = new UserRoleHelper();
+}
+<style>
+	.btnWide {
+		width:100%;
+	}
+</style>
+
+
+<div class="container">
+	<h2>Manage Roles</h2>
+	@using (Html.BeginForm())
+	{
+		@Html.AntiForgeryToken();
+		<div class="row">
+			<div class="col-md-4">
+				@Html.DropDownList("RoleName", "-- No Role --")
+			</div>
+			<div class="col-md-12 text-center">
+				@Html.ListBox("UserIds")
+			</div>
+		</div>
+		<br />
+		<div class="row">
+			<div class="col">
+				<button type="submit" class="btn btn-primary btnWide">Manage Role Assignment</button>
+			</div>
+		</div>
+	}
+	<hr />
+	<table class="table">
+		<tr>
+			<th>
+				User
+			</th>
+			<th>
+				Role
+			</th>
+		</tr>
+		@foreach (var person in Model)
+		{ 
+			<tr>
+				<td>
+					@person.FullName
+				</td>
+				<td>
+					@roleHelper.ListUserRoles(person.Id).FirstOrDefault()
+				</td>
+			</tr>
+		}
+	</table>
+</div>

@@ -1,0 +1,39 @@
+﻿@using BugTracker2.Models
+@using BugTracker2.Helpers
+@model IEnumerable<ApplicationUser>
+	@{
+		var userRoleHelper = new UserRoleHelper();
+	}
+
+<div class="container">
+	<h2>User List</h2>
+	<table class="table">
+		<tr>
+			<th>Full Name</th>
+			<th>Email</th>
+			<th>Roles</th>
+			<th></th>
+		</tr>
+		@foreach (var user in Model)
+		{
+			<tr>
+				<td>
+					@user.FullName
+				</td>
+				<td>
+					@user.Email
+				</td>
+				<td>
+					@userRoleHelper.ListUserRoles(user.Id).FirstOrDefault()
+				</td>
+				<td>
+					@if (User.IsInRole("Admin") || User.IsInRole("Project Manager"))
+					{ 
+						@Html.ActionLink("Manage Role","ManageUserRole", new { id = user.Id})
+					}
+				</td>
+			</tr>
+		}
+	</table>
+
+</div>

@@ -1,0 +1,125 @@
+﻿@using BugTracker2.Helpers
+@using BugTracker2.ViewModels
+@using BugTracker2.Models
+@model MyTicketViewModel
+
+@{
+	ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@if (User.IsInRole("Submitter"))
+{
+	<p>
+		@Html.ActionLink("Create New", "Create")
+	</p>
+}
+<hr />
+@if (Model.MyTickets.Count > 0)
+{
+	<h3>My Tickets</h3>
+	<br />
+	<table class="table">
+		<thead>
+
+		<tr>
+			<th>
+				Project
+			</th>
+			
+			<th>
+				Priority
+			</th>
+			
+			<th>
+				Status
+			</th>
+			
+			<th>
+				Type
+			</th>
+			
+			<th>
+				Submitter
+			</th>
+			
+			<th>
+				Developer
+			</th>
+			
+			<th>
+				Issue
+			</th>
+
+			<th>
+				Description
+			</th>
+
+			<th>
+				Created
+			</th>
+
+			<th>
+				Resolved
+			</th>
+			
+			<th>
+				Archived
+			</th>
+		</tr>
+		</thead>
+		<tbody>
+
+		@foreach (var item in Model.MyTickets)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Project.ProjectName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.TicketPriority.Name)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.TicketStatus.Name)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.TicketType.Name)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Submitter.FullName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Developer.FullName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.IssueName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.IssueDescription)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Created)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.IsResolved)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.IsArchived)
+				</td>
+				
+				<td>
+					@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+					@Html.ActionLink("Details", "Details", new { id = item.Id }) |
+					
+				</td>
+			</tr>
+		}
+
+		</tbody>
+	</table>
+
+}
+else
+{
+	<p>You have no Tickets.</p>
+}
